@@ -15,7 +15,15 @@ export default function App() {
 		const username = e.target[0].value;
 		const password = e.target[1].value;
 
-		console.log(username, password);
+		const userData = { username, password };
+
+		fetch("http://localhost:4000/register", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(userData),
+		})
+			.then((res) => res.json())
+			.then((registerResponse) => setRegisterResponse(registerResponse.data));
 	};
 
 	const login = async (e) => {
