@@ -8,9 +8,25 @@ export default function App() {
 	const [registerResponse, setRegisterResponse] = useState("");
 	const [loginResponse, setLoginResponse] = useState("");
 
-	const register = async (e) => {
-		e.preventDefault();
+	const register = async (event) => {
+		event.preventDefault();
 		// Write your register code here
+
+		const username = event.target[0].value;
+		const password = event.target[1].value;
+
+		const body = {
+			username: username,
+			password: password,
+		};
+
+		fetch("http://localhost:4000/register", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(body),
+		})
+			.then((response) => response.json())
+			.then((data) => setRegisterResponse(Object.values(data)[0]));
 	};
 
 	const login = async (e) => {
