@@ -26,7 +26,16 @@ export default function App() {
 			body: JSON.stringify(body),
 		})
 			.then((response) => response.json())
-			.then((data) => setRegisterResponse(Object.values(data)[0]));
+			.then((data) => {
+				// setRegisterResponse(Object.values(data)[0]);
+				const keyName = Object.keys(data)[0];
+
+				if (keyName === "user") {
+					setRegisterResponse("Registered succesfully");
+				} else {
+					setRegisterResponse("Error: Username already exists");
+				}
+			});
 	};
 
 	const login = async (e) => {
