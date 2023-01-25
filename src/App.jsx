@@ -60,9 +60,10 @@ export default function App() {
 			.then((response) => response.json())
 			.then((data) => {
 				const keyName = Object.keys(data)[0];
-
+				console.log("this is my data", data);
 				if (keyName === "accessToken") {
 					setLoginResponse("Login succesful");
+					localStorage.setItem("LoginAccessToken", data.accessToken);
 				} else {
 					setLoginResponse("Error: Username or Password are invalid!");
 				}
