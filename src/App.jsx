@@ -38,9 +38,35 @@ export default function App() {
 			});
 	};
 
-	const login = async (e) => {
-		e.preventDefault();
+	const login = async (event) => {
+		event.preventDefault();
 		// Write your login code here
+
+		const username = event.target[0].value;
+		const password = event.target[1].value;
+
+		const body = {
+			username: username,
+			password: password,
+		};
+		console.log("this is the body", body);
+		console.log("before the fetch");
+
+		fetch("http://localhost:4000/login", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(body),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				const keyName = Object.keys(data)[0];
+
+				if (keyName === "accessToken") {
+					setLoginResponse("Login succesful");
+				} else {
+					setLoginResponse("Error: Username or Password are invalid!");
+				}
+			});
 	};
 
 	// You can safely ignore everything below this line, it's just boilerplate
