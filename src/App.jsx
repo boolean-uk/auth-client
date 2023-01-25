@@ -32,9 +32,14 @@ export default function App() {
 			body: JSON.stringify(user),
 		})
 			.then((res) => res.json())
-			.then((loginResponse) => setLoginResponse(loginResponse.data));
+			.then((loginResponse) => {
+				setLoginResponse(loginResponse.access_token);
+				// console.log(object)
+				localStorage.setItem("access token", loginResponse.access_token);
+			});
 
-		setLoginResponse(`User ${user.username} successfully logged in`);
+		// setLoginResponse(user.access_token);
+		// console.log(user);
 	};
 
 	// You can safely ignore everything below this line, it's just boilerplate
