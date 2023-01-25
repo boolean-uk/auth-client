@@ -19,6 +19,8 @@ export default function App() {
 		})
 			.then((res) => res.json())
 			.then((registerResponse) => setRegisterResponse(registerResponse.data));
+
+		setRegisterResponse(`User ${user.username} created`);
 	};
 
 	const login = async (e) => {
@@ -31,6 +33,8 @@ export default function App() {
 		})
 			.then((res) => res.json())
 			.then((loginResponse) => setLoginResponse(loginResponse.data));
+
+		setLoginResponse(`User ${user.username} successfully logged in`);
 	};
 
 	// You can safely ignore everything below this line, it's just boilerplate
