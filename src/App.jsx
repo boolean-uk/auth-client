@@ -34,12 +34,9 @@ export default function App() {
 			.then((res) => res.json())
 			.then((loginResponse) => {
 				setLoginResponse(loginResponse.access_token);
-				// console.log(object)
+
 				localStorage.setItem("access token", loginResponse.access_token);
 			});
-
-		// setLoginResponse(user.access_token);
-		// console.log(user);
 	};
 
 	// You can safely ignore everything below this line, it's just boilerplate
