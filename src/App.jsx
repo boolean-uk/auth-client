@@ -12,15 +12,10 @@ export default function App() {
 		e.preventDefault();
 		// Write your register code here
 
-		const username = e.target[0].value;
-		const password = e.target[1].value;
-
-		const userData = { username, password };
-
 		fetch("http://localhost:4000/register", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(userData),
+			body: JSON.stringify(user),
 		})
 			.then((res) => res.json())
 			.then((registerResponse) => setRegisterResponse(registerResponse.data));
@@ -29,6 +24,13 @@ export default function App() {
 	const login = async (e) => {
 		e.preventDefault();
 		// Write your login code here
+		fetch("http://localhost:4000/login", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(user),
+		})
+			.then((res) => res.json())
+			.then((loginResponse) => setLoginResponse(loginResponse.data));
 	};
 
 	// You can safely ignore everything below this line, it's just boilerplate
