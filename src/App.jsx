@@ -10,17 +10,33 @@ export default function App() {
 
     const register = async (e) => {
         e.preventDefault();
-        // Write your register code here
-
+        fetch("http://localhost:4000/register/", {
+            method: "POST",
+            headers: { "Content-type": "application/JSON" },
+            body: JSON.stringify(user),
+        })
+            .then((res) => res.json())
+            .then((data) => 
+                setRegisterResponse(`User created with username: ${data.user.username}`))
+                
 
     };
 
     const login = async (e) => {
         e.preventDefault();
         // Write your login code here
-
-        
-    };
+        fetch("http://localhost:4000/login/", {
+            method: "POST",
+            headers: { "Content-type": "application/JSON" },
+            body: JSON.stringify(user),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                
+                setLoginResponse("Login succesful", data.token);
+                localStorage.setItem("Token", data.token)
+            });
+    }
 
 
 
