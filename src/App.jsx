@@ -10,15 +10,15 @@ export default function App() {
 
     const register = async (e) => {
         e.preventDefault();
-        fetch("http://localhost:4000/register/", {
+        fetch("http://localhost:4000/register", {
             method: "POST",
-            headers: { "Content-type": "application/JSON" },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user),
         })
             .then((res) => res.json())
             .then((data) => 
-                setRegisterResponse(`User created with username: ${data.user.username}`))
-                
+                setRegisterResponse(data))
+        setRegisterResponse(`User created with username: ${user.username }`)
 
     };
 
