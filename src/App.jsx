@@ -33,9 +33,10 @@ export default function App() {
             .then((res) => res.json())
             .then((data) => {
                 
-                setLoginResponse("Login succesful", data.token);
-                localStorage.setItem("Token", data.token)
+                setLoginResponse("Login succesful", data.access_token);
+                localStorage.setItem("token", data.access_token)
             });
+            setLoginResponse(`User ${user.username} successfully logged in`)
     }
 
 
