@@ -11,21 +11,40 @@ export default function App() {
     const register = async (e) => {
         e.preventDefault();
         // Write your register code here
+        const newUser = JSON.stringify(user);
 
-
+        const options = {
+            method: 'POST',
+            body: newUser,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        fetch('http://localhost:4000/register', options)
+            .then((res) => res.json())
+            .then((data) => {
+                setRegisterResponse(`Created new user: ${data.data.username}`);
+            });
     };
 
     const login = async (e) => {
         e.preventDefault();
         // Write your login code here
-
-        
+        const loginUser = JSON.stringify(user);
+        const options = {
+            method: 'POST',
+            body: loginUser,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        fetch('http://localhost:4000/login', options)
+            .then((res) => res.json())
+            .then((data) => {
+                setLoginResponse(data.token);
+                localStorage.setItem('token', loginResponse);
+            });
     };
-
-
-
-
-
 
     // You can safely ignore everything below this line, it's just boilerplate
     // so you can focus on the exercise requirements
@@ -35,13 +54,12 @@ export default function App() {
 
         setUser({
             ...user,
-            [name]: value
+            [name]: value,
         });
-    }
+    };
 
     return (
         <div className="App">
-
             <h1>Register</h1>
 
             <Form
@@ -49,20 +67,20 @@ export default function App() {
                 inputs={[
                     <Input
                         key={1}
-                        type='text'
-                        name='username'
-                        placeholder='Username'
+                        type="text"
+                        name="username"
+                        placeholder="Username"
                         value={user.username}
                         handleChange={handleChange}
                     />,
                     <Input
                         key={2}
-                        type='password'
-                        name='password'
-                        placeholder='Password'
+                        type="password"
+                        name="password"
+                        placeholder="Password"
                         value={user.password}
                         handleChange={handleChange}
-                    />
+                    />,
                 ]}
             />
 
@@ -75,25 +93,24 @@ export default function App() {
                 inputs={[
                     <Input
                         key={1}
-                        type='text'
-                        name='username'
-                        placeholder='Username'
+                        type="text"
+                        name="username"
+                        placeholder="Username"
                         value={user.username}
                         handleChange={handleChange}
                     />,
                     <Input
                         key={2}
-                        type='password'
-                        name='password'
-                        placeholder='Password'
+                        type="password"
+                        name="password"
+                        placeholder="Password"
                         value={user.password}
                         handleChange={handleChange}
-                    />
+                    />,
                 ]}
             />
 
             {loginResponse && <p>{loginResponse}</p>}
-
         </div>
     );
 }
