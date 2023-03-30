@@ -24,8 +24,17 @@ export default function App() {
     const login = async (e) => {
         e.preventDefault();
         // Write your login code here
-
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        }
+        fetch("http://localhost:4000/login", options)
+            .then(response => response.json())
+            .then(data => setLoginResponse(data.token))
         
+        const token = JSON.stringify(loginResponse)
+        window.localStorage.setItem("accessToken", token) 
     };
 
 
