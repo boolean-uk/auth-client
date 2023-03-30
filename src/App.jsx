@@ -19,14 +19,21 @@ export default function App() {
       body: JSON.stringify(user),
     })
       .then((response) => response.json())
-      .then(
-        (data) => setRegisterResponse(data.user.username)
-      );
+      .then((data) => setRegisterResponse(data.user.username));
   };
 
   const login = async (e) => {
     e.preventDefault();
     // Write your login code here
+    fetch("http://localhost:4000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => response.json())
+      .then((data) => setLoginResponse(data.token));
   };
 
   // You can safely ignore everything below this line, it's just boilerplate
