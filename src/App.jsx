@@ -34,6 +34,10 @@ export default function App() {
     })
       .then((response) => response.json())
       .then((data) => setLoginResponse(data.token));
+
+    const token = JSON.stringify(loginResponse);
+    window.localStorage.setItem("loginResponse", token);
+
   };
 
   // You can safely ignore everything below this line, it's just boilerplate
