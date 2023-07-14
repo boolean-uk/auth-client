@@ -29,7 +29,7 @@ export default function App() {
             if (Object.keys(data)[0] !== "error"){
                 const response = data.user.username
                 setRegisterResponse(response)
-                console.log(registerResponse)
+    
             } else {
                 setRegisterResponse("Username already exists")
             }
@@ -46,8 +46,29 @@ export default function App() {
     const login = async (e) => {
         e.preventDefault();
         // Write your login code here
+        const options = {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(user)
+        }
 
-        
+        fetch('http://localhost:4000/login', options)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+
+            if (Object.keys(data)[0] !== "error"){
+                const response = data.token
+                setLoginResponse(response)
+              
+            } else {
+                const response = data.error
+                setLoginResponse(response)
+            }
+        })
+
     };
 
 
