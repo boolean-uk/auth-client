@@ -1,4 +1,5 @@
 export default function Form({ handleSubmit, inputs }) {
+
     return (
         <form onSubmit={handleSubmit}>
             {inputs.map(input => input)}
