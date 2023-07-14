@@ -46,13 +46,14 @@ export default function App() {
             .then(function (data) {
                 
               setLoginResponse(`${user.username} has been logged in /n ${data.token}`)
+              localStorage.setItem("Token", data.token );
               console.log(setLoginResponse)
             })
         
     };
 
 
-
+  
 
 
 
