@@ -11,8 +11,14 @@ export default function App() {
     const register = async (e) => {
         e.preventDefault();
         // Write your register code here
+        const username = e.target[0].value
+        const password = e.target[1].value
 
-
+        const response = await fetch('http://localhost:4000/register', {
+      method: 'POST',
+      body: JSON.stringify({username, password})
+    })
+    console.log(response)
     };
 
     const login = async (e) => {
