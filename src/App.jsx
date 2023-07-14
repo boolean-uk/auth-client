@@ -13,12 +13,26 @@ export default function App() {
         // Write your register code here
         const username = e.target[0].value
         const password = e.target[1].value
+ 
+        setUser({username: username, password: password})
+
+        console.log(user)
 
         const response = await fetch('http://localhost:4000/register', {
-      method: 'POST',
-      body: JSON.stringify({username, password})
-    })
-    console.log(response)
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify(user)
+          })
+
+          console.log(response)
+
+          setRegisterResponse(response)
+
+        
+
     };
 
     const login = async (e) => {
@@ -72,7 +86,7 @@ export default function App() {
                 ]}
             />
 
-            {registerResponse && <p>{registerResponse}</p>}
+            {registerResponse && <p>{registerResponse.status}</p>}
 
             <h1>Login</h1>
 
