@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "./components/Form";
 import Input from "./components/Input";
 
@@ -7,11 +7,6 @@ export default function App() {
   const [user, setUser] = useState({ username: "", password: "" });
   const [registerResponse, setRegisterResponse] = useState("");
   const [loginResponse, setLoginResponse] = useState("");
-
-  const [jwt, setJwt] = useState(() => {
-    const localValue = localStorage.getItem("jwt")
-  return JSON.parse(localValue)
-  })
 
   const register = async (e) => {
     e.preventDefault();
@@ -31,20 +26,27 @@ export default function App() {
 
   const login = async (e) => {
     e.preventDefault();
-    // Write your login code here
+  
     const requestLogin = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        username:user.username,
-        password:user.password
-      })
-    }
-       fetch("http://localhost:4000/login", requestLogin).then((response) => {
-      response.json();
-      setLoginResponse(response.statusText);
-  })
+        username: user.username,
+        password: user.password,
+      }),
+    };
+  
+    fetch("http://localhost:4000/login", requestLogin)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('my data', data.data.token);
+        localStorage.setItem("token", data.data.token); 
+        setLoginResponse(data.status);
+      });
   };
+  
+
+
 
   // You can safely ignore everything below this line, it's just boilerplate
   // so you can focus on the exercise requirements
