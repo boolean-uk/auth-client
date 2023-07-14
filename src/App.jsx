@@ -62,6 +62,9 @@ export default function App() {
             if (Object.keys(data)[0] !== "error"){
                 const response = data.token
                 setLoginResponse(response)
+
+                // Token saved!
+                localStorage.setItem('Token', response)
               
             } else {
                 const response = data.error
