@@ -18,20 +18,18 @@ export default function App() {
 
         console.log(user)
 
-        const response = await fetch('http://localhost:4000/register', {
+        fetch('http://localhost:4000/register', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify(user)
-          })
-
+          }).then((res) => res.json()).then((response) => {
           console.log(response)
 
           setRegisterResponse(response)
-
-        
+        })
 
     };
 
@@ -86,7 +84,7 @@ export default function App() {
                 ]}
             />
 
-            {registerResponse && <p>{registerResponse.status}</p>}
+            {registerResponse && <p>{registerResponse.message}</p>}
 
             <h1>Login</h1>
 
