@@ -12,6 +12,34 @@ export default function App() {
         e.preventDefault();
         // Write your register code here
 
+        const options = {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(user)
+        }
+
+      
+
+        fetch('http://localhost:4000/register', options)
+        .then(response => response.json()) 
+        .then(data => {
+
+            if (Object.keys(data)[0] !== "error"){
+                const response = data.user.username
+                setRegisterResponse(response)
+                console.log(registerResponse)
+            } else {
+                setRegisterResponse("Username already exists")
+            }
+
+            
+        })
+        
+        
+
+
 
     };
 
