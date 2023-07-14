@@ -27,7 +27,6 @@ export default function App() {
             body: JSON.stringify(user)
           }).then((res) => res.json()).then((response) => {
           console.log(response)
-
           setRegisterResponse(response)
         })
 
@@ -37,6 +36,7 @@ export default function App() {
         e.preventDefault();
         // Write your login code here
 
+          localStorage.setItem("token", registerResponse.token)
         
     };
 
@@ -84,7 +84,7 @@ export default function App() {
                 ]}
             />
 
-            {registerResponse && <p>{registerResponse.message}</p>}
+            {registerResponse && <p>{registerResponse.token}</p>}
 
             <h1>Login</h1>
 
