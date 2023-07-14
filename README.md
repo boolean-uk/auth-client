@@ -18,7 +18,9 @@ This exercise asks you to complete a user registration and login form that inter
 ## Instructions
 
 <details>
+
 <summary><strong>I want to build the forms myself</strong></summary>
+
 <ul>
 <li>Fork this repository and clone the fork.</li>
 <li>Checkout the <code>freedom</code> branch ( <code>git checkout freedom</code> )</li>
@@ -28,9 +30,11 @@ This exercise asks you to complete a user registration and login form that inter
 <li>Work through each file in the <code>requirements</code> folder in numerical order.</li>
 </ul>
 </details>
- 
+
 <details>
+
 <summary><strong>I want to use pre-built forms</strong></summary>
+
 <ul>
 <li>Fork this repository and clone the fork.</li>
 <li>Run <code>npm ci</code> to install dependencies.</li>
