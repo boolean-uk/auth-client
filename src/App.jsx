@@ -8,6 +8,11 @@ export default function App() {
   const [registerResponse, setRegisterResponse] = useState("");
   const [loginResponse, setLoginResponse] = useState("");
 
+  const [jwt, setJwt] = useState(() => {
+    const localValue = localStorage.getItem("jwt")
+  return JSON.parse(localValue)
+  })
+
   const register = async (e) => {
     e.preventDefault();
     const requestPost = {
@@ -27,7 +32,18 @@ export default function App() {
   const login = async (e) => {
     e.preventDefault();
     // Write your login code here
-    // setLoginResponse(e.target.value)
+    const requestLogin = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username:user.username,
+        password:user.password
+      })
+    }
+       fetch("http://localhost:4000/login", requestLogin).then((response) => {
+      response.json();
+      setLoginResponse(response.statusText);
+  })
   };
 
   // You can safely ignore everything below this line, it's just boilerplate
