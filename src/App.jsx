@@ -24,7 +24,7 @@ export default function App() {
                 return response.json()
               })
               .then(function (data) {
-                setRegisterResponse(`${user.username} has been created`)
+                setRegisterResponse(`${user.username} has been registered`)
               })
     
     };
