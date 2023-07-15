@@ -13,40 +13,32 @@ export default function App() {
     const requestPost = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: user.username,
-        password: user.password,
-      }),
+      body: JSON.stringify(user),
     };
-    fetch("http://localhost:4000/register", requestPost).then((response) => {
-      response.json();
-      setRegisterResponse(response.statusText);
+    fetch("http://localhost:4000/register", requestPost).then((res) => {
+      res.json();
+      setRegisterResponse(res.statusText);
     });
   };
 
   const login = async (e) => {
     e.preventDefault();
-  
-    const requestLogin = {
+
+    const opts = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: user.username,
-        password: user.password,
-      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
     };
-  
-    fetch("http://localhost:4000/login", requestLogin)
-      .then((response) => response.json())
+
+    fetch("http://localhost:4000/login", opts)
+      .then((res) => res.json())
       .then((data) => {
-        console.log('my data', data.data.token);
-        localStorage.setItem("token", data.data.token); 
-        setLoginResponse(data.status);
+        setLoginResponse(data.data.token);
+        localStorage.setItem("username", data.token);
       });
   };
-  
-
-
 
   // You can safely ignore everything below this line, it's just boilerplate
   // so you can focus on the exercise requirements
