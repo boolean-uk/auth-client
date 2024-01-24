@@ -9,6 +9,11 @@ const BASE_URL = "http://localhost:4000"
 function LoginForm({ setLoggedIn }) {
     const [form, setForm] = useState(DEFAULT);
 
+    function storeInLocalStorage(data) {
+      setLoggedIn(data)
+      data && data.token && localStorage.setItem("token", data.token)
+    }
+
     function handleSubmission(e) {
       e && e.preventDefault()
         const data = {
@@ -24,7 +29,7 @@ function LoginForm({ setLoggedIn }) {
         
         fetch(BASE_URL + "/login", options, data)
         .then(res => res.json())
-        .then(setLoggedIn)
+        .then(storeInLocalStorage)
     }
     useEffect(handleSubmission, [])
 
