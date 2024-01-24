@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import { Form } from "./Form";
 
 const DEFAULT_FORM = {
   username: undefined,
@@ -8,34 +9,9 @@ const DEFAULT_FORM = {
 
 export default function App() {
   const [form, setForm] = useState(DEFAULT_FORM);
-
   return (
     <div className="App">
-      <form>
-        <label>
-          username:
-          <input
-            name="username"
-            value={form.username}
-            onChange={(e) =>
-              setForm({ ...form, [e.target.name]: e.target.value })
-            }
-            type="text"
-          />
-        </label>
-        <label>
-          password:
-          <input
-            name="password"
-            value={form.password}
-            onChange={(e) =>
-              setForm({ ...form, [e.target.name]: e.target.value })
-            }
-            type="text"
-          />
-        </label>
-        <button type="submit">SUBMIT</button>
-      </form>
+      <Form form={form} setForm={setForm}/>
       <div>
         <h2>username</h2>
         <p></p>
