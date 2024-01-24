@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from 'react';
 import Form from './components/Form';
 import Input from './components/Input';
+import axios from 'axios';
 
 export default function App() {
   const [user, setUser] = useState({ username: '', password: '' });
@@ -10,11 +11,24 @@ export default function App() {
 
   const register = async (e) => {
     e.preventDefault();
-    // Write your register code here
-    
-    console.log(e.target.username.value)
-    console.log(e.target.password.value)
-  };
+
+    const inputUsername = e.target.username.value
+    const inputPassword = e.target.password.value
+
+    try {
+      const { data } = await axios.post('http://localhost:4000/register', {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        username: inputUsername,
+        password: inputPassword
+      })
+      setRegisterResponse(data.success)
+    }
+    catch (err) {
+      setRegisterResponse(err.response.data.error)
+    }
+  }
 
   const login = async (e) => {
     e.preventDefault();
