@@ -1,92 +1,28 @@
-import './App.css';
-import { useState } from 'react';
-import Form from './components/Form';
-import Input from './components/Input';
+import { useState } from "react";
+import "./App.css";
+import { RegisterForm } from "./RegisterForm";
+import { LoginForm } from "./LoginForm";
 
 export default function App() {
-  const [user, setUser] = useState({ username: '', password: '' });
-  const [registerResponse, setRegisterResponse] = useState('');
-  const [loginResponse, setLoginResponse] = useState('');
-
-  const register = async (e) => {
-    e.preventDefault();
-    // Write your register code here
-
-  };
-
-  const login = async (e) => {
-    e.preventDefault();
-    // Write your login code here
-
-  };
-
-  // You can safely ignore everything below this line, it's just boilerplate
-  // so you can focus on the exercise requirements
-
-  const handleChange = (e) => {
-    const { value, name } = e.target;
-
-    setUser({
-      ...user,
-      [name]: value
-    });
-  }
+  const [registered, setRegistered] = useState(undefined);
+  const [loggedIn, setLoggedIn] = useState(undefined);
 
   return (
     <div className="App">
-
-      <h1>Register</h1>
-
-      <Form
-        handleSubmit={register}
-        inputs={[
-          <Input
-            key={1}
-            type='text'
-            name='username'
-            placeholder='Username'
-            value={user.username}
-            handleChange={handleChange}
-          />,
-          <Input
-            key={2}
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={user.password}
-            handleChange={handleChange}
-          />
-        ]}
-      />
-
-      {registerResponse && <p>{registerResponse}</p>}
-
-      <h1>Login</h1>
-
-      <Form
-        handleSubmit={login}
-        inputs={[
-          <Input
-            key={1}
-            type='text'
-            name='username'
-            placeholder='Username'
-            value={user.username}
-            handleChange={handleChange}
-          />,
-          <Input
-            key={2}
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={user.password}
-            handleChange={handleChange}
-          />
-        ]}
-      />
-
-      {loginResponse && <p>{loginResponse}</p>}
-
+      <RegisterForm setRegistered={setRegistered} registered={registered} />
+      <div>
+        <h2>username</h2>
+        <p>{registered && registered.registeredUser && registered.registeredUser.username}</p>
+      </div>
+      <div>
+        <h2>password</h2>
+        <p>{registered && registered.registeredUser && registered.registeredUser.password}</p>
+      </div>
+      <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <div>
+        <h2>token</h2>
+        <p>{loggedIn && loggedIn.token}</p>
+      </div>
     </div>
   );
 }
