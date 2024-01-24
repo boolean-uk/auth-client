@@ -29,9 +29,9 @@ Imagine the below code gets profile information for a user by ID but requires a 
 
 ```js
 fetch('http://localhost:4000/user-profile/1', {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json'
-    }
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 ```
