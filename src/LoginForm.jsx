@@ -6,11 +6,11 @@ const DEFAULT = {
   };
 const BASE_URL = "http://localhost:4000"
 
-function RegisterForm({ setResults}) {
+function LoginForm({ setLoggedIn }) {
     const [form, setForm] = useState(DEFAULT);
 
-    function handleSubmission() {
-
+    function handleSubmission(e) {
+      e.preventDefault()
         const data = {
             username: form.username,
             password: form.password
@@ -22,14 +22,16 @@ function RegisterForm({ setResults}) {
             body: JSON.stringify(data)
         }
         
-        fetch(BASE_URL + "/register", options, data)
+        fetch(BASE_URL + "/login", options, data)
         .then(res => res.json())
-        .then(setResults)
+        .then(data => console.log(data))
+        .then(setLoggedIn)
     }
 
   return (
     <>
       <form onSubmit={handleSubmission}>
+        <h2>LOGIN</h2>
         <label>
           username:
           <input
@@ -58,4 +60,4 @@ function RegisterForm({ setResults}) {
   );
 }
 
-export { RegisterForm };
+export { LoginForm };

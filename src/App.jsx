@@ -1,20 +1,27 @@
 import { useState } from "react";
 import "./App.css";
-import { RegisterForm } from "./Form";
+import { RegisterForm } from "./RegisterForm";
+import { LoginForm } from "./LoginForm";
 
 export default function App() {
-  const [results, setResults] = useState(undefined);
+  const [registered, setRegistered] = useState(undefined);
+  const [loggedIn, setLoggedIn] = useState(undefined);
 
   return (
     <div className="App">
-      <RegisterForm setResult={setResults} result={results} />
+      <RegisterForm setRegistered={setRegistered} registered={registered} />
       <div>
         <h2>username</h2>
-        <p>{results && results.registeredUser.username}</p>
+        <p>{registered && registered.registeredUser.username}</p>
       </div>
       <div>
         <h2>password</h2>
-        <p>{results && results.registeredUser.password}</p>
+        <p>{registered && registered.registeredUser.password}</p>
+      </div>
+      <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <div>
+        <h2>token</h2>
+        <p>{loggedIn && loggedIn.token}</p>
       </div>
     </div>
   );
