@@ -44,8 +44,8 @@ export default function App() {
         username: loginUsername,
         password: loginPassword
       })
-      console.log(data)
       setLoginResponse(`${data.success} ${data.token}`)
+      localStorage.setItem('token', data.token)
     }
     catch (err) {
       setLoginResponse(err.response.data.error)
