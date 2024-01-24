@@ -1,10 +1,14 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form from "./components/Form";
 import Input from "./components/Input";
 
 export default function App() {
-  const [user, setUser] = useState({ username: "", password: "" });
+  const [user, setUser] = useState(() => {
+    // Retrieve stored user data from localStorage on component mount
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : { username: "", password: "" };
+  });
   const [registerResponse, setRegisterResponse] = useState("");
   const [loginResponse, setLoginResponse] = useState("");
 
@@ -23,22 +27,17 @@ export default function App() {
       };
       const response = await fetch("http://localhost:4000/register", option);
 
-      // fetch("http://localhost:4000/register", option)
-      //   .then((res) => res.json())
-      //   .then((data) => {
-      //     setRegisterResponse(data.user.username);
-      //     console.log(data.user.username);
-      //   });
-
       if (response.ok) {
         const result = await response.json();
         setRegisterResponse(result.user.username);
+        setUser({ username: "", password: "" });
+        localStorage.clear();
       } else {
         const errorResult = await response.json();
         setRegisterResponse(errorResult.error);
       }
     } catch (error) {
-      console.log(error.message);
+      setRegisterResponse(error.message);
     }
   };
 
@@ -60,8 +59,10 @@ export default function App() {
 
       if (response.ok) {
         const result = await response.json();
+        localStorage.setItem("token", result.token);
         setLoginResponse(result.token);
-        console.log(loginResponse);
+        setUser({ username: "", password: "" });
+        localStorage.removeItem("user");
       } else {
         const errorResult = await response.json();
         setLoginResponse(errorResult.error);
@@ -71,15 +72,14 @@ export default function App() {
     }
   };
 
-  // You can safely ignore everything below this line, it's just boilerplate
-  // so you can focus on the exercise requirements
-
   const handleChange = (e) => {
     const { value, name } = e.target;
 
-    setUser({
-      ...user,
-      [name]: value,
+    setUser((prevUser) => {
+      const updatedUser = { ...prevUser, [name]: value };
+      // Store updated user data in localStorage
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return updatedUser;
     });
   };
 
