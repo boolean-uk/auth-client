@@ -6,7 +6,7 @@ const DEFAULT = {
   };
 const BASE_URL = "http://localhost:4000"
 
-function registerForm({ setResults}) {
+function RegisterForm({ setResults}) {
     const [form, setForm] = useState(DEFAULT);
 
     function handleSubmission() {
@@ -58,4 +58,4 @@ function registerForm({ setResults}) {
   );
 }
 
-export { registerFormForm };
+export { RegisterForm };
