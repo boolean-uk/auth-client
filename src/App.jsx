@@ -12,16 +12,16 @@ export default function App() {
   const register = async (e) => {
     e.preventDefault();
 
-    const inputUsername = e.target.username.value
-    const inputPassword = e.target.password.value
+    const registerUsername = e.target.username.value
+    const registerPassword = e.target.password.value
 
     try {
       const { data } = await axios.post('http://localhost:4000/register', {
         headers: {
           'Content-Type': 'application/json'
         },
-        username: inputUsername,
-        password: inputPassword
+        username: registerUsername,
+        password: registerPassword
       })
       setRegisterResponse(data.success)
     }
@@ -32,9 +32,25 @@ export default function App() {
 
   const login = async (e) => {
     e.preventDefault();
-    // Write your login code here
+    
+    const loginUsername = e.target.username.value
+    const loginPassword = e.target.password.value
 
-  };
+    try {
+      const { data } = await axios.post('http://localhost:4000/login', {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        username: loginUsername,
+        password: loginPassword
+      })
+      console.log(data)
+      setLoginResponse(`${data.success} ${data.token}`)
+    }
+    catch (err) {
+      setLoginResponse(err.response.data.error)
+    }
+  }
 
   // You can safely ignore everything below this line, it's just boilerplate
   // so you can focus on the exercise requirements
