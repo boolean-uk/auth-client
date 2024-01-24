@@ -1,27 +1,20 @@
 import { useState } from "react";
 import "./App.css";
-import { Form } from "./Form";
-
-const DEFAULT = {
-  username: undefined,
-  password: undefined,
-};
+import { registerForm } from "./Form";
 
 export default function App() {
-
-  const [results, setResults] = useState(DEFAULT);
-
+  const [results, setResults] = useState(undefined);
 
   return (
     <div className="App">
-      <Form setResult={setResults}/>
+      <registerForm setResult={setResults} result={results} />
       <div>
         <h2>username</h2>
-        <p>{results.username}</p>
+        <p>{results && results.registeredUser.username}</p>
       </div>
       <div>
         <h2>password</h2>
-        <p>{results.password}</p>
+        <p>{results && results.registeredUser.password}</p>
       </div>
     </div>
   );
