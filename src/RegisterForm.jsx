@@ -6,11 +6,11 @@ const DEFAULT = {
   };
 const BASE_URL = "http://localhost:4000"
 
-function RegisterForm({ setRegistered, registered }) {
+function RegisterForm({ setRegistered }) {
     const [form, setForm] = useState(DEFAULT);
 
     function handleSubmission(e) {
-      e.preventDefault()
+      e && e.preventDefault()
         const data = {
             username: form.username,
             password: form.password
@@ -27,6 +27,7 @@ function RegisterForm({ setRegistered, registered }) {
         .then(setRegistered)
     }
 
+    useEffect(handleSubmission, [])
   return (
     <>
       <form onSubmit={handleSubmission}>

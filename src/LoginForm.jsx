@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const DEFAULT = {
     username: undefined,
@@ -10,7 +10,7 @@ function LoginForm({ setLoggedIn }) {
     const [form, setForm] = useState(DEFAULT);
 
     function handleSubmission(e) {
-      e.preventDefault()
+      e && e.preventDefault()
         const data = {
             username: form.username,
             password: form.password
@@ -24,9 +24,9 @@ function LoginForm({ setLoggedIn }) {
         
         fetch(BASE_URL + "/login", options, data)
         .then(res => res.json())
-        .then(data => console.log(data))
         .then(setLoggedIn)
     }
+    useEffect(handleSubmission, [])
 
   return (
     <>

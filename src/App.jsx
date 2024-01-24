@@ -12,11 +12,11 @@ export default function App() {
       <RegisterForm setRegistered={setRegistered} registered={registered} />
       <div>
         <h2>username</h2>
-        <p>{registered && registered.registeredUser.username}</p>
+        <p>{registered && registered.registeredUser && registered.registeredUser.username}</p>
       </div>
       <div>
         <h2>password</h2>
-        <p>{registered && registered.registeredUser.password}</p>
+        <p>{registered && registered.registeredUser && registered.registeredUser.password}</p>
       </div>
       <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <div>
