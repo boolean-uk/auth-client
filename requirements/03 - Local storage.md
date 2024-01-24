@@ -32,7 +32,7 @@ fetch('http://localhost:4000/user-profile/1', {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json'
-        'Authorization': 'token'
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
     }
 })
 ```

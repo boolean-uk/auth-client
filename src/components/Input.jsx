@@ -1,9 +1,10 @@
+// eslint-disable-next-line react/prop-types
 export default function Input({ type, value, name, placeholder, handleChange }) {
     return (
         <input
             type={type}
             placeholder={placeholder}
-            name={name} 
+            name={name}
             value={value}
             onChange={handleChange}
         />
