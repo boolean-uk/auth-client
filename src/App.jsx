@@ -11,7 +11,9 @@ export default function App() {
   const register = async (e) => {
     e.preventDefault();
     // Write your register code here
-
+    
+    console.log(e.target.username.value)
+    console.log(e.target.password.value)
   };
 
   const login = async (e) => {
