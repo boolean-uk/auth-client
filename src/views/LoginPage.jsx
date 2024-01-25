@@ -3,7 +3,7 @@ import Form from '../components/Form'
 import Input from '../components/Input'
 import { Link } from 'react-router-dom'
 
-const LoginPage = (user, handleChange) => {
+const LoginPage = ({ user, handleChange }) => {
   const [loginResponse, setLoginResponse] = useState('')
 
   const login = async (e) => {

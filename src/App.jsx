@@ -16,17 +16,33 @@ export default function App() {
     })
   }
 
+  const clearForm = () => {
+    setUser({ username: '', password: '' })
+  }
+
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route
           path="/register"
-          element={<RegisterPage user={user} handleChange={handleChange} />}
+          element={
+            <RegisterPage
+              user={user}
+              handleChange={handleChange}
+              clearForm={clearForm}
+            />
+          }
         />
         <Route
           path="/login"
-          element={<LoginPage user={user} handleChange={handleChange} />}
+          element={
+            <LoginPage
+              user={user}
+              handleChange={handleChange}
+              clearForm={clearForm}
+            />
+          }
         />
       </Routes>
     </div>

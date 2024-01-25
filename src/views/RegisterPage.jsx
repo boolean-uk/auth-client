@@ -1,14 +1,29 @@
 import { useState } from 'react'
 import Form from '../components/Form'
 import Input from '../components/Input'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-const RegisterPage = (user, handleChange) => {
+const RegisterPage = ({ user, handleChange, clearForm }) => {
   const [registerResponse, setRegisterResponse] = useState('')
+
+  const navigate = useNavigate()
 
   const register = async (e) => {
     e.preventDefault()
-    // Write your register code here
+
+    try {
+      await axios.post('http://localhost:4000/register', user)
+
+      setRegisterResponse('Successful registration')
+
+      setTimeout(() => {
+        clearForm()
+        navigate('/login')
+      }, 1000)
+    } catch (error) {
+      setRegisterResponse(error.response.data.error)
+    }
   }
 
   return (
