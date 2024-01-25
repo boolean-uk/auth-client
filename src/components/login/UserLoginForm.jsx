@@ -13,10 +13,9 @@ export default function UserLoginForm({ setLoginResponse }) {
       if (res.status === 201) {
         const form = document.querySelector(".form");
 
-        console.log(res);
-
         setUserLogin(INITIAL_STATE);
-        setLoginResponse(res.data.token);
+        setLoginResponse("Login Successful");
+        localStorage.setItem("login-token", res.data.token);
 
         form.reset();
       } else {
