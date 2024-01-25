@@ -7,3 +7,4 @@ export default function Form({ handleSubmit, inputs }) {
         </form>
     );
 }
+
