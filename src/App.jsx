@@ -1,9 +1,18 @@
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Output from "./components/Output";
+import UserLogin from "./components/login/UserLogin";
+import UserRegister from "./components/register/UserRegister";
 
 export default function App() {
-  return (
-    <div className="App">
+  const [registerResponse, setRegisterResponse] = useState("");
+  const [loginResponse, setLoginResponse] = useState("");
 
-    </div>
+  return (
+    <main id="app_container">
+      <UserRegister setRegisterResponse={setRegisterResponse} />
+      <UserLogin setLoginResponse={setLoginResponse} />
+      <Output regRes={registerResponse} loginRes={loginResponse} />
+    </main>
   );
 }
