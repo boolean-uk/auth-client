@@ -4,7 +4,7 @@ import Input from '../components/Input'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-const LoginPage = ({ user, handleChange }) => {
+const LoginPage = ({ user, handleChange, clearForm, setIsAuth }) => {
   const [loginResponse, setLoginResponse] = useState('')
 
   const login = async (e) => {
@@ -13,7 +13,13 @@ const LoginPage = ({ user, handleChange }) => {
     try {
       const response = await axios.post('http://localhost:4000/login', user)
 
-      setLoginResponse(response.data.token)
+      localStorage.setItem('token', response.data.token)
+      setLoginResponse('Successful Login! Redirecting to home page...')
+
+      setTimeout(() => {
+        setIsAuth(true)
+        clearForm()
+      }, 2000)
     } catch (error) {
       setLoginResponse(error.response.data.error)
     }

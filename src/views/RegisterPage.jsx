@@ -15,12 +15,14 @@ const RegisterPage = ({ user, handleChange, clearForm }) => {
     try {
       await axios.post('http://localhost:4000/register', user)
 
-      setRegisterResponse('Successful registration')
+      setRegisterResponse(
+        'Successful Registration! Redirecting to login page...'
+      )
 
       setTimeout(() => {
         clearForm()
         navigate('/login')
-      }, 1000)
+      }, 2000)
     } catch (error) {
       setRegisterResponse(error.response.data.error)
     }
