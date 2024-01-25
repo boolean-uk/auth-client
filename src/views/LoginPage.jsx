@@ -2,13 +2,21 @@ import { useState } from 'react'
 import Form from '../components/Form'
 import Input from '../components/Input'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const LoginPage = ({ user, handleChange }) => {
   const [loginResponse, setLoginResponse] = useState('')
 
   const login = async (e) => {
     e.preventDefault()
-    // Write your login code here
+
+    try {
+      const response = await axios.post('http://localhost:4000/login', user)
+
+      setLoginResponse(response.data.token)
+    } catch (error) {
+      setLoginResponse(error.response.data.error)
+    }
   }
 
   return (
