@@ -8,15 +8,52 @@ export default function App() {
   const [registerResponse, setRegisterResponse] = useState('');
   const [loginResponse, setLoginResponse] = useState('');
 
+  const registerURL = "http://localhost:4000/register"
+  const loginURL = "http://localhost:4000/login"
+
   const register = async (e) => {
     e.preventDefault();
-    // Write your register code here
 
-  };
+    try {
+      const response = await fetch(registerURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setRegisterResponse("Registration successful");
+      } else {
+        setRegisterResponse('Registration Failed');
+      }
+    } catch (error) {
+      setRegisterResponse("An error occurred during registration");
+    }
+
+  }
 
   const login = async (e) => {
     e.preventDefault();
-    // Write your login code here
+
+    try {
+      const response = await fetch(loginURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setLoginResponse("Login successful");
+        localStorage.setItem('jwtToken', data.token);
+
+      } else {
+        setLoginResponse("Login Failed");
+      }
+    } catch (error) {
+      setLoginResponse("An error occurred during login");
+    }
 
   };
 
