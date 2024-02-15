@@ -10,18 +10,40 @@ export default function App() {
 
   const register = async (e) => {
     e.preventDefault();
-    // Write your register code here
-
+    try {
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
+      const data = await response.json();
+      setRegisterResponse(data.message);
+    } catch (error) {
+      console.error('Error registering:', error);
+      setRegisterResponse('Error registering. Please try again.');
+    }
   };
 
   const login = async (e) => {
     e.preventDefault();
-    // Write your login code here
-
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
+      const data = await response.json();
+      setLoginResponse(data.message);
+    } catch (error) {
+      console.error('Error logging in:', error);
+      setLoginResponse('Error logging in. Please try again.');
+    }
   };
 
-  // You can safely ignore everything below this line, it's just boilerplate
-  // so you can focus on the exercise requirements
 
   const handleChange = (e) => {
     const { value, name } = e.target;
