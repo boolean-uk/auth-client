@@ -3,8 +3,11 @@ import { useState } from 'react';
 import Form from './components/Form';
 import Input from './components/Input';
 
+const baseURL = "http://localhost:4000"
+
 export default function App() {
-  const [user, setUser] = useState({ username: '', password: '' });
+	const initUser = { username: '', password: '' }
+  const [user, setUser] = useState(initUser);
   const [registerResponse, setRegisterResponse] = useState('');
   const [loginResponse, setLoginResponse] = useState('');
 
@@ -17,7 +20,20 @@ export default function App() {
   const login = async (e) => {
     e.preventDefault();
     // Write your login code here
+		const options = {
+			method: "POST",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify(user)
+		}
 
+		try {
+			const response = await fetch(`${baseURL}/login`, options)
+			if (response.status !== 200) throw new Error("invalid credentials")
+			setLoginResponse(`${user.username} logged in`)
+		} catch (error) {
+			setLoginResponse(error.message)
+			setUser(initUser)
+		}
   };
 
   // You can safely ignore everything below this line, it's just boilerplate
