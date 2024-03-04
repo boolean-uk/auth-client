@@ -37,6 +37,9 @@ export default function App() {
         body: JSON.stringify(user),
       });
       const data = await response.json();
+      if (data.token) {
+        localStorage.setItem('token', data.token); // Saving token to local storage
+      }
       setLoginResponse(data.message);
     } catch (error) {
       console.error('Error logging in:', error);
