@@ -1,92 +1,84 @@
-import './App.css';
-import { useState } from 'react';
-import Form from './components/Form';
-import Input from './components/Input';
+import "./App.css";
+import { useEffect, useState } from "react";
+import LoginPage from "./views/LoginPage";
+import RegisterPage from "./views/RegisterPage";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 export default function App() {
-  const [user, setUser] = useState({ username: '', password: '' });
-  const [registerResponse, setRegisterResponse] = useState('');
-  const [loginResponse, setLoginResponse] = useState('');
+  const [userState, setUserState] = useState({ username: "", password: "" });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const register = async (e) => {
-    e.preventDefault();
-    // Write your register code here
-
-  };
-
-  const login = async (e) => {
-    e.preventDefault();
-    // Write your login code here
-
-  };
-
-  // You can safely ignore everything below this line, it's just boilerplate
-  // so you can focus on the exercise requirements
-
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { value, name } = e.target;
 
-    setUser({
-      ...user,
-      [name]: value
+    setUserState({
+      ...userState,
+      [name]: value,
     });
-  }
+  };
+
+  const clearForm = () => {
+    setUserState({ username: "", password: "" });
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem("token");
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   return (
     <div className="App">
-
-      <h1>Register</h1>
-
-      <Form
-        handleSubmit={register}
-        inputs={[
-          <Input
-            key={1}
-            type='text'
-            name='username'
-            placeholder='Username'
-            value={user.username}
-            handleChange={handleChange}
-          />,
-          <Input
-            key={2}
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={user.password}
-            handleChange={handleChange}
-          />
-        ]}
-      />
-
-      {registerResponse && <p>{registerResponse}</p>}
-
-      <h1>Login</h1>
-
-      <Form
-        handleSubmit={login}
-        inputs={[
-          <Input
-            key={1}
-            type='text'
-            name='username'
-            placeholder='Username'
-            value={user.username}
-            handleChange={handleChange}
-          />,
-          <Input
-            key={2}
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={user.password}
-            handleChange={handleChange}
-          />
-        ]}
-      />
-
-      {loginResponse && <p>{loginResponse}</p>}
-
+      <Routes>
+        <Route
+          path="/"
+          element={
+            !isAuthenticated ? (
+              <Navigate to="/login" />
+            ) : (
+              <h1>
+                You're already logged in <br />{" "}
+                <button onClick={logout}>Log out</button>
+              </h1>
+            )
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            !isAuthenticated ? (
+              <RegisterPage
+                userData={userState}
+                handleInputChange={handleInputChange}
+                clearForm={clearForm}
+              />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            !isAuthenticated ? (
+              <LoginPage
+                userData={userState}
+                handleInputChange={handleInputChange}
+                clearForm={clearForm}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </div>
   );
 }
