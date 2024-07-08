@@ -11,13 +11,43 @@ export default function App() {
   const register = async (e) => {
     e.preventDefault();
     // Write your register code here
+    if (user.username.length < 5) {
+      alert('Username must be at least 5 characters long')
+      return; 
+    }
 
+    if(user.password.length < 8) {
+      alert('Password must be at 8 characters or longer')
+      return;
+    }
+    const registerRequest = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    }
+
+    fetch('http://localhost:4000/register/', registerRequest)
+      .then(res => res.json())
+      .then(data => setRegisterResponse(data.user))
   };
 
   const login = async (e) => {
     e.preventDefault();
     // Write your login code here
+    const loginRequest = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    }
 
+    fetch('http://localhost:4000/login/', loginRequest)
+      .then(res => res.json())
+      .then(data => setLoginResponse(data.user))
+      .then(localStorage.setItem(user.username, loginResponse))
   };
 
   // You can safely ignore everything below this line, it's just boilerplate
@@ -59,7 +89,7 @@ export default function App() {
         ]}
       />
 
-      {registerResponse && <p>{registerResponse}</p>}
+      {registerResponse && <p>{registerResponse.username}</p>}
 
       <h1>Login</h1>
 
