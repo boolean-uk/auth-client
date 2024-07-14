@@ -10,15 +10,41 @@ export default function App() {
 
   const register = async (e) => {
     e.preventDefault();
-    // Write your register code here
+    try {
+      const response = await fetch('http://localhost:4000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify( user ),
+      })
 
+      const data = await response.json()
+      setRegisterResponse(data.user.username)
+    } catch (error) {
+      setRegisterResponse('Registration failed!')
+    }
   };
 
   const login = async (e) => {
     e.preventDefault();
-    // Write your login code here
+    
+    const response = await fetch('http://localhost:4000/login', {
+      method : 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
 
+    const {token} = await response.json()
+    setLoginResponse(token)
+    localStorage.setItem('token', token)
   };
+
+
+  // console.log(user)
+    
 
   // You can safely ignore everything below this line, it's just boilerplate
   // so you can focus on the exercise requirements

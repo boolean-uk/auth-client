@@ -23,15 +23,26 @@ The user has logged in and now has a valid bearer token saved in local storage. 
 
 Answer:
 
+## before fetch :
+```js
+const token = localStroage.getItem('token')
+```
+```js
+"Authorization" : `bearer ${token}`
+```
+
 ### Q2
 
 Imagine the below code gets profile information for a user by ID but requires a valid token to access. What would you add to include the token from local storage?
 
 ```js
+const token = localStroage.getItem('token')
+
 fetch('http://localhost:4000/user-profile/1', {
     method: 'GET',
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'bearer ${token}`
     }
 })
 ```
