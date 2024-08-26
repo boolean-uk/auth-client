@@ -1,92 +1,67 @@
-import './App.css';
-import { useState } from 'react';
-import Form from './components/Form';
-import Input from './components/Input';
+import React, { useState } from 'react';
 
-export default function App() {
-  const [user, setUser] = useState({ username: '', password: '' });
-  const [registerResponse, setRegisterResponse] = useState('');
-  const [loginResponse, setLoginResponse] = useState('');
+function App() {
+  const [registerResponse, setRegisterResponse] = useState(null);
+  const [loginResponse, setLoginResponse] = useState(null);
 
-  const register = async (e) => {
-    e.preventDefault();
-    // Write your register code here
+  const register = async (event) => {
+    event.preventDefault();
+    const username = event.target.username.value;
+    const password = event.target.password.value;
 
-  };
-
-  const login = async (e) => {
-    e.preventDefault();
-    // Write your login code here
-
-  };
-
-  // You can safely ignore everything below this line, it's just boilerplate
-  // so you can focus on the exercise requirements
-
-  const handleChange = (e) => {
-    const { value, name } = e.target;
-
-    setUser({
-      ...user,
-      [name]: value
+    const response = await fetch('http://localhost:4000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
     });
-  }
+
+    const data = await response.json();
+    setRegisterResponse(data);
+  };
+
+  const login = async (event) => {
+    event.preventDefault();
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+
+    const response = await fetch('http://localhost:4000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+    setLoginResponse(data);
+
+    // Store the JWT in localStorage
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+    }
+  };
 
   return (
     <div className="App">
-
       <h1>Register</h1>
-
-      <Form
-        handleSubmit={register}
-        inputs={[
-          <Input
-            key={1}
-            type='text'
-            name='username'
-            placeholder='Username'
-            value={user.username}
-            handleChange={handleChange}
-          />,
-          <Input
-            key={2}
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={user.password}
-            handleChange={handleChange}
-          />
-        ]}
-      />
-
-      {registerResponse && <p>{registerResponse}</p>}
+      <form onSubmit={register}>
+        <input type="text" name="username" placeholder="Username" />
+        <input type="password" name="password" placeholder="Password" />
+        <button type="submit">Register</button>
+      </form>
+      {registerResponse && <p>{JSON.stringify(registerResponse)}</p>}
 
       <h1>Login</h1>
-
-      <Form
-        handleSubmit={login}
-        inputs={[
-          <Input
-            key={1}
-            type='text'
-            name='username'
-            placeholder='Username'
-            value={user.username}
-            handleChange={handleChange}
-          />,
-          <Input
-            key={2}
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={user.password}
-            handleChange={handleChange}
-          />
-        ]}
-      />
-
-      {loginResponse && <p>{loginResponse}</p>}
-
+      <form onSubmit={login}>
+        <input type="text" name="username" placeholder="Username" />
+        <input type="password" name="password" placeholder="Password" />
+        <button type="submit">Login</button>
+      </form>
+      {loginResponse && <p>{JSON.stringify(loginResponse)}</p>}
     </div>
   );
 }
+
+export default App;
