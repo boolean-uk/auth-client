@@ -1,23 +1,49 @@
-import './App.css';
-import { useState } from 'react';
-import Form from './components/Form';
-import Input from './components/Input';
+import "./App.css";
+import { useState } from "react";
+import Form from "./components/Form";
+import Input from "./components/Input";
 
 export default function App() {
-  const [user, setUser] = useState({ username: '', password: '' });
-  const [registerResponse, setRegisterResponse] = useState('');
-  const [loginResponse, setLoginResponse] = useState('');
+  const [user, setUser] = useState({ username: "", password: "" });
+  const [registerResponse, setRegisterResponse] = useState("");
+  const [loginResponse, setLoginResponse] = useState("");
 
   const register = async (e) => {
     e.preventDefault();
     // Write your register code here
-
+    const response = await fetch("http://localhost:4000/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: user.username,
+        password: user.password,
+      }),
+    });
+    const finalResponse = await response.json();
+    setRegisterResponse(JSON.stringify(finalResponse.user));
+    // console.log(response.json());
   };
 
   const login = async (e) => {
     e.preventDefault();
     // Write your login code here
-
+    const response = await fetch("http://localhost:4000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: user.username,
+        password: user.password,
+      }),
+    });
+    const finalResponse = await response.json();
+    console.log(finalResponse);
+    localStorage.setItem("jwtToken", finalResponse.token);
+    setLoginResponse(JSON.stringify(finalResponse.token));
+    console.log("GOTTEN TOKEN" + localStorage.getItem("jwtToken"));
   };
 
   // You can safely ignore everything below this line, it's just boilerplate
@@ -28,13 +54,12 @@ export default function App() {
 
     setUser({
       ...user,
-      [name]: value
+      [name]: value,
     });
-  }
+  };
 
   return (
     <div className="App">
-
       <h1>Register</h1>
 
       <Form
@@ -42,20 +67,20 @@ export default function App() {
         inputs={[
           <Input
             key={1}
-            type='text'
-            name='username'
-            placeholder='Username'
+            type="text"
+            name="username"
+            placeholder="Username"
             value={user.username}
             handleChange={handleChange}
           />,
           <Input
             key={2}
-            type='password'
-            name='password'
-            placeholder='Password'
+            type="password"
+            name="password"
+            placeholder="Password"
             value={user.password}
             handleChange={handleChange}
-          />
+          />,
         ]}
       />
 
@@ -68,25 +93,24 @@ export default function App() {
         inputs={[
           <Input
             key={1}
-            type='text'
-            name='username'
-            placeholder='Username'
+            type="text"
+            name="username"
+            placeholder="Username"
             value={user.username}
             handleChange={handleChange}
           />,
           <Input
             key={2}
-            type='password'
-            name='password'
-            placeholder='Password'
+            type="password"
+            name="password"
+            placeholder="Password"
             value={user.password}
             handleChange={handleChange}
-          />
+          />,
         ]}
       />
 
       {loginResponse && <p>{loginResponse}</p>}
-
     </div>
   );
 }
